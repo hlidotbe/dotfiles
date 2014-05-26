@@ -1,0 +1,8 @@
+--type-add=js=.coffee
+--type-add=php=.ctp
+--type-add=css=.scss
+--type-set=smarty=.tpl
+--type-set=erb=.erb
+--ignore-dir=tmp
+--ignore-dir=vendor
+--ignore-dir=log
