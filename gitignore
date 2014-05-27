@@ -9,6 +9,7 @@
 *.bz2
 *.xz
 *.lzma
+*.cab
 
 #packing-only formats
 *.iso
@@ -17,17 +18,19 @@
 #package management formats
 *.dmg
 *.xpi
+*.gem
 *.egg
 *.deb
 *.rpm
-/.hg/*
-*/.hg/*
-.hgignore
+*.msi
+*.msm
+*.msp
 .DS_Store
 .AppleDouble
 .LSOverride
-Icon
 
+# Icon must end with two \r
+Icon
 
 # Thumbnails
 ._*
@@ -35,18 +38,35 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-### SASS Ignores - "Sassy CSS" http://sass-lang.com/
-*.sass-cache
-# Ignore tags created by etags and ctags
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
 !TAGS/
 tags
 !tags/
-.*.s[a-w][a-z]
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+.vagrant/
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
 *~
+
 tmp
 vendor
 coverage
