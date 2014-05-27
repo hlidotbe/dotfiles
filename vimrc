@@ -42,6 +42,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'wellle/targets.vim'
+NeoBundleLocal ~/.vim/local_bundle
 
 call neobundle#end()
 NeoBundleCheck
@@ -162,7 +163,7 @@ nnoremap <space>y :Unite history/yank<cr>
 
 autocmd FileType unite call s:unite_settings()
 nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <Leader>be :<C-u>Unite -buffer-name=buffers -start-insert buffer<cr>
+nnoremap <Leader>be :<C-u>Unite -buffer-name=buffers -no-start-insert buffer<cr>
 function! s:unite_settings()
   let b:SuperTabDisabled=1
   imap <buffer> <C-j> <Plug>(unite_select_next_line)
