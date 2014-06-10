@@ -147,10 +147,15 @@ let g:unite_enable_start_insert = 1
 let g:unite_split_rule = "botright"
 let g:unite_force_overwrite_statusline = 0
 let g:unite_winheight = 10
-
+if executable('pt')
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+endif
 call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
-      \ '\.git/', 'vendor/bundle/', '\.vagrant', 'tmp/', 'cache/', '/log/'
+      \ '\.git/', 'vendor/bundle/', '\.vagrant', 'tmp/', 'cache/', '/log/', 'node_modules/'
       \ ], '\|'))
 
 " Use the fuzzy matcher for everything
@@ -174,6 +179,7 @@ function! s:unite_settings()
 
   nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction
+nnoremap <silent> <Leader>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 
 ""
 "" Delimitmate
@@ -258,8 +264,8 @@ nmap <Leader>a <Plug>(EasyAlign)
 "" Zencoding config
 ""
 
-let g:user_emmet_expandabbr_key = '<c-e>'
 let g:user_emmet_settings = {'indentation' : '  '}
+let g:user_emmet_leader_key = '<c-e>'
 
 ""
 "" Syntastic
