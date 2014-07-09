@@ -15,7 +15,7 @@ export CASE_SENSITIVE="true"
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
 
-plugins=(brew osx gitfast ruby vagrant zsh-syntax-highlighting golang bundler)
+plugins=(brew osx gitfast git-extras ruby vagrant zsh-syntax-highlighting golang bundler)
 
 export PATH=~/bin:~/.gem/ruby/2.0.0/bin:/usr/local/bin:$PATH
 
