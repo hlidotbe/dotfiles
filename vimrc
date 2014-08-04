@@ -144,7 +144,7 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_data_directory='~/.vim/.cache/unite'
 let g:unite_source_rec_max_cache_files=10000
 let g:unite_enable_start_insert = 1
-let g:unite_split_rule = "botright"
+"let g:unite_split_rule = "botright"
 let g:unite_force_overwrite_statusline = 0
 let g:unite_winheight = 10
 if executable('pt')
