@@ -72,8 +72,8 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PAGER
 export GEMS_PATH
-export RM_DEV_CERTIFICATE='iPhone Developer: Hugues Lismonde (KS283N6B89)'
-export RM_DEV_PROFILE='/Users/hli/Library/MobileDevice/Provisioning Profiles/B236632A-C07C-44CE-886F-6C8EAACC436D.mobileprovision'
+export RM_DEV_CERTIFICATE='iPhone Developer: Hugues Lismonde (3HHYN7JNH7)'
+export RM_DEV_PROFILE='/Users/hli/Library/MobileDevice/Provisioning Profiles/93114068-D9A6-472F-94F6-13E4C7B317B2.mobileprovision'
 export RM_PUB_CERTIFICATE='iPhone Distribution: EPIC Web Agency Sprl'
 export RM_PUB_PROFILE='/Users/hli/Library/MobileDevice/Provisioning Profiles/96D692C9-FF06-4617-BD7D-D310297C4B3C.mobileprovision'
 export RUBY_FREE_MIN=200000

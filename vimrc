@@ -7,18 +7,19 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+"NeoBundle 'Shougo/unite.vim'
+"NeoBundle 'Shougo/vimfiler.vim'
+"NeoBundle 'Shougo/vimproc.vim', {'build': {'mac': 'make'}}
 NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'AndrewRadev/switch.vim'
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/vimproc.vim', {'build': {'mac': 'make'}}
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'chriskempson/base16-vim'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jiangmiao/auto-pairs'
@@ -40,6 +41,7 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'wellle/targets.vim'
 NeoBundleLocal ~/.vim/local_bundle
@@ -55,7 +57,8 @@ let g:loaded_matchparen=1  " Disable matching paren highlight
 let mapleader = "\<space>" " Fits law, space is the larget target on the keyboard...
 filetype plugin indent on
 au BufRead,BufNewFile *.scss	set filetype=scss " Force scss filetype
-set wildignore+=*.png,*.jpg,*.gif,*.ico,.DS_Store
+set wildignore+=*.png,*.jpg,*.gif,*.ico,.DS_Store,*/vendor/bundle/*,*.gem,*.zip,*/log/*,*/tmp/*,*/node_modules/*
+set re=1
 
 ""
 "" Basic Setup
@@ -126,60 +129,70 @@ set directory=~/.vim/_temp/      " where to put swap files.
 "" VimFiler
 ""
 
-let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_tree_leaf_icon = ' '
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_file_icon = '-'
-let g:vimfiler_marked_file_icon = '*'
-map <Leader>n :VimFilerExplorer -quit<CR>
-nmap = :VimFilerExplorer -find -quit<CR>
+"let g:vimfiler_safe_mode_by_default = 0
+"let g:vimfiler_as_default_explorer = 1
+"let g:vimfiler_tree_leaf_icon = ' '
+"let g:vimfiler_tree_opened_icon = '▾'
+"let g:vimfiler_tree_closed_icon = '▸'
+"let g:vimfiler_file_icon = '-'
+"let g:vimfiler_marked_file_icon = '*'
+"map <Leader>n :VimFilerExplorer -quit<CR>
+"nmap = :VimFilerExplorer -find -quit<CR>
+map <Leader>n <Plug>VinegarUp
+nmap = <Plug>VinegarUp
 
 ""
 "" Unite
 ""
 
-let g:unite_source_history_yank_enable = 1
-let g:unite_data_directory='~/.vim/.cache/unite'
-let g:unite_source_rec_max_cache_files=10000
-let g:unite_enable_start_insert = 1
+"let g:unite_source_history_yank_enable = 1
+"let g:unite_data_directory='~/.vim/.cache/unite'
+"let g:unite_source_rec_max_cache_files=10000
+"let g:unite_enable_start_insert = 1
 "let g:unite_split_rule = "botright"
-let g:unite_force_overwrite_statusline = 0
-let g:unite_winheight = 10
-if executable('pt')
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
-  let g:unite_source_grep_encoding = 'utf-8'
-endif
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/', 'vendor/bundle/', '\.vagrant', 'tmp/', 'cache/', '/log/', 'node_modules/'
-      \ ], '\|'))
+"let g:unite_force_overwrite_statusline = 0
+"let g:unite_winheight = 10
+"if executable('pt')
+"  let g:unite_source_grep_command = 'pt'
+"  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+"  let g:unite_source_grep_recursive_opt = ''
+"  let g:unite_source_grep_encoding = 'utf-8'
+"endif
+"call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+"      \ 'ignore_pattern', join([
+"      \ '\.git/', 'vendor/bundle/', '\.vagrant', 'tmp/', 'cache/', '/log/', 'node_modules/'
+"      \ ], '\|'))
 
 " Use the fuzzy matcher for everything
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
 " Use the rank sorter for everything
-call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#filters#sorter_default#use(['sorter_rank'])
 
-nnoremap <space>y :Unite history/yank<cr>
+"nnoremap <space>y :Unite history/yank<cr>
 
-autocmd FileType unite call s:unite_settings()
-nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
-nnoremap <Leader>be :<C-u>Unite -buffer-name=buffers -no-start-insert buffer<cr>
-function! s:unite_settings()
-  let b:SuperTabDisabled=1
-  imap <buffer> <C-j> <Plug>(unite_select_next_line)
-  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+"autocmd FileType unite call s:unite_settings()
+"nnoremap <C-P> :<C-u>Unite -buffer-name=files -start-insert file_rec/async:!<cr>
+"nnoremap <Leader>be :<C-u>Unite -buffer-name=buffers -no-start-insert buffer<cr>
+"function! s:unite_settings()
+  "let b:SuperTabDisabled=1
+  "imap <buffer> <C-j> <Plug>(unite_select_next_line)
+  "imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+  "imap <silent><buffer><expr> <C-x> unite#do_action('split')
+  "imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+  "imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
 
-  nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
-nnoremap <silent> <Leader>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+  "nmap <buffer> <ESC> <Plug>(unite_exit)
+"endfunction
+"nnoremap <silent> <Leader>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+
+""
+"" CtrlP
+""
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'.vim/.cache/ctrlp'
+let g:ctrlp_reuse_window = 'netrw'
+nnoremap <Leader>be :CtrlPBuffer<cr>
 
 ""
 "" Delimitmate
@@ -455,7 +468,7 @@ nnoremap - :Switch<cr>
 
 nnoremap <C-a> :A<cr>
 
-map <F12> :!/usr/local/bin/ctags -R --exclude=.git --exclude=logs --exclude=doc --fields=+l .<CR>
+map <F12> :!/usr/local/bin/ctags -R --exclude=.git --exclude=logs --exclude=doc --exclude=vendor --fields=+l .<CR>
 
 " Quick blame
 vmap <Leader>g :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
